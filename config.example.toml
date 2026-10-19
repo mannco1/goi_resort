@@ -1,0 +1,53 @@
+# Скопируйте этот файл в config.toml и поправьте под себя.
+# Любой параметр можно удалить — тогда возьмётся значение по умолчанию.
+
+[audio]
+capture_system = true      # слушать собеседника (звук, который идёт в наушники)
+capture_mic = true         # слушать вас — для контекста, подсказку не запускает
+system_device = ""         # часть имени устройства вывода, напр. "Headphones"; пусто = по умолчанию
+mic_device = ""            # часть имени микрофона; пусто = по умолчанию
+# Список устройств: python -m interview_helper --list-devices
+
+[vad]
+threshold = 0.5            # чувствительность к речи (0.3 — чувствительнее, 0.7 — строже)
+silence_ms = 600           # сколько тишины закрывает фразу
+min_speech_ms = 300
+max_segment_s = 20
+partial_interval_s = 1.2   # как часто обновлять «живой» текст
+
+[asr]
+model = "nemo-parakeet-tdt-0.6b-v3"   # мультиязычная: русский, английский и ещё 23 языка
+quantization = "int8"                 # "" — полная точность (точнее, но медленнее и тяжелее)
+providers = []                        # [] = CPU; ["DmlExecutionProvider"] — любая видеокарта через DirectML;
+                                      # ["CUDAExecutionProvider"] — NVIDIA (нужны CUDA и onnxruntime-gpu)
+model_dir = ""                        # если скачали модель вручную — путь к папке
+
+[llm]
+model = "claude-haiku-5-5"   # самый быстрый; "claude-sonnet-5-5" — умнее, но дольше
+api_key = ""                 # лучше задать переменную окружения ANTHROPIC_API_KEY
+max_tokens = 450
+auto = true                  # подсказка сама появляется, когда собеседник договорил
+turn_pause_ms = 900          # пауза, после которой считаем, что собеседник договорил
+min_words = 4                # «угу», «понятно» и т.п. не запускают подсказку
+history_turns = 14
+
+[profile]
+resume = "profile/resume.md"
+vacancy = "profile/vacancy.md"
+notes = "profile/notes.md"
+
+[ui]
+opacity = 0.93
+font_size = 13
+width = 520
+height = 640
+x = -1                       # -1 = у правого края экрана
+y = 60
+hide_from_capture = false    # true — окно не попадает в демонстрацию экрана и записи (Windows 10 2004+)
+global_hotkeys = true
+hotkey_hint = "ctrl+alt+space"
+hotkey_pause = "ctrl+alt+p"
+
+[log]
+enabled = true               # сохранять расшифровку и подсказки в sessions/*.md
+dir = "sessions"

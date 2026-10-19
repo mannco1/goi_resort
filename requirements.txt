@@ -1,0 +1,6 @@
+onnx-asr[cpu,hub]>=0.12
+numpy>=1.26
+soxr>=0.4
+PyAudioWPatch>=0.2.12 ; sys_platform == "win32"
+anthropic>=0.40
+keyboard>=0.13 ; sys_platform == "win32"
